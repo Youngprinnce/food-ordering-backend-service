@@ -1,0 +1,50 @@
+/menus/favourite-meal:
+  # post:
+  #   tags: [Menu]
+  #   description: Create favourite meals
+  #   # security:
+  #   #   - bearerAuth: []
+  #   requestBody:
+  #     content:
+  #       application/json:
+  #         schema:
+  #           type: object
+  #           required: [favMeals]
+  #           properties:
+  #             favMeals:
+  #               type: array
+  #               items:
+  #                 type: object
+  #                 properties:
+  #                   name:
+  #                     type: string
+  #                     example: Pizza
+  #                     required: true
+  #                     description: Name of the meal
+  #   responses:
+  #     200:
+  #       description: The user's profile was updated
+  #     401:
+  #       description: The request was malformed
+
+  get:
+    tags: [Menu]
+    description: Get all favourite meals
+    # security:
+    #   - bearerAuth: []
+    responses:
+      200:
+        description: All favourite meals fetched successfully
+      400:
+        description: The request was malformed
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+tags:
+  name: Menu
+  description: The Menu API

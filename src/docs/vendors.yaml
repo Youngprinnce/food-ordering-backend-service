@@ -1,0 +1,961 @@
+/vendors/signup/step-one:
+  post:
+    tags: [Vendors]
+    description: Sign up a new vendor
+    requestBody:
+      content:
+        application/json:
+          schema:
+            type: object
+            required: [firstname, lastname, email, password, mobile]
+            properties:
+              firstname:
+                type: string
+                example: foo
+                description: firstname of the vendor
+              lastname:
+                type: string
+                example: bar
+                description: lastname of the vendor
+              email:
+                type: string
+                example: foo@bar.com
+                description: email of the vendor
+              password:
+                type: string
+                example: Foobar!1
+                description: password of the vendor
+              mobile:
+                type: string
+                example: "+2347023456789"
+                description: mobile of the vendor
+    responses:
+      200:
+        description: The vendor's profile was created successfully
+      401:
+        description: The request was malformed.
+
+/vendors/verify-account:
+  post:
+    tags: [Vendors]
+    description: Verify a vendor's account
+    requestBody:
+      content:
+        application/json:
+          schema:
+            type: object
+            required: [emailToken, mobileToken]
+            properties:
+              emailToken:
+                type: string
+                example: "1234"
+                description: code sent to the user's email
+              mobileToken:
+                type: string
+                example: "1234"
+                description: code sent to the user's mobile
+    responses:
+      200:
+        description: The vendor's profile was updated
+      400:
+        description: The request was malformed
+
+/vendors/resend-token:
+  get:
+    tags: [Vendors]
+    description: Resend vendor a new verification token
+    security:
+      - bearerAuth: []
+    responses:
+      200:
+        description: The vendor's profile was updated
+      400:
+        description: The request was malformed
+
+/vendors/login:
+  post:
+    tags: [Vendors]
+    description: Login a vendor
+    requestBody:
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              emailorMobile:
+                type: string
+                example: foo@bar.com or +2347023456789
+                required: true
+                description: email or mobile of the vendor
+              password:
+                type: string
+                example: Foobar!1
+                required: true
+                description: password of the vendor
+    responses:
+      200:
+        description: The vendor's profile was updated
+      400:
+        description: The request was malformed
+
+/vendors/signup/step-two:
+  put:
+    tags: [Vendors]
+    description: Complete registration
+    security:
+      - bearerAuth: []
+    requestBody:
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              address:
+                type: string
+                example: 5 driveway lekki
+                description: address of the vendor
+              geoLocation:
+                type: object
+                properties:
+                  type:
+                    type: string
+                    example: Point
+                    description: type of the geoLocation
+                  coordinates:
+                    type: array
+                    items:
+                      type: number
+                      example: 114.5110151, -8.45973
+                      description: coordinates of the user(Latitude first, longitude next)
+              role:
+                type: string
+                required: true
+                example: owner
+                validations:
+                  - in: [owner, co-owner, admin, manager]
+                description: role of the user
+              vendorMobileNumbers:
+                type: array
+                items:
+                  type: string
+                  example: "07023456789"
+                  description: mobile of the vendor
+              vendorName:
+                type: string
+                example: Foo Bar
+                required: true
+                description: name of the vendor
+              vendorType:
+                type: string
+                required: true
+                example: 626578cb098bffa9d5c525ef
+                description: Id of the vendor type
+              vendorCategory:
+                type: array
+                required: true
+                items:
+                  type: string
+                  example: 626578cb098bffa9d5c525ef
+                  description: Id of the vendor category
+              website:
+                type: string
+                example: "https://www.google.com"
+                description: website of the vendor
+              socialMedia:
+                type: object
+                properties:
+                  facebook:
+                    type: string
+                    example: "https://www.facebook.com/foo"
+                    description: facebook of the vendor
+                  instagram:
+                    type: string
+                    example: "https://www.instagram.com/foo"
+                    description: instagram of the vendor
+                  twitter:
+                    type: string
+                    example: "https://www.twitter.com/foo"
+                    description: twitter of the vendor
+              vendorBankDetails:
+                type: object
+                properties:
+                  bankName:
+                    type: string
+                    example: Foo Bank
+                    description: name of the bank
+                  accountHolderName:
+                    type: string
+                    example: Foo Bar
+                    description: account name of the vendor
+                  accountNumber:
+                    type: string
+                    example: "123456789"
+                    description: account number of the vendor
+              taxIdNumber:
+                type: string
+                example: "123456789"
+                description: tax id number of the vendor
+              formOfIdentification:
+                type: string
+                example: passport
+                validations:
+                  - in: [passport, driving_license, national_id]
+              identificationNumber:
+                type: string
+                example: "123456789"
+                description: identification number of the vendor
+              vendorLogo:
+                type: string
+                format: binary
+                description: logo of the vendor
+              vendorBannerImage:
+                type: string
+                format: binary
+                description: banner image of the vendor
+              vendorCertificateImage:
+                type: string
+                format: binary
+                description: certificate image of the vendor
+              identificationImage:
+                type: string
+                format: binary
+                description: identification image of the vendor
+              vendorMenu:
+                type: string
+                format: binary
+                description: menu of the vendor
+              schedule_period:
+                type: object
+                properties:
+                  schedule:
+                    type: boolean
+                    example: true
+                    description: schedule of the vendor
+                  notice_period:
+                    type: number
+                    example: 1
+                    description: notice period of the vendor
+              opening_hours:
+                type: object
+                properties:
+                  monday:
+                    type: object
+                    properties:
+                      start:
+                        type: string
+                        example: "0900"
+                        required: true
+                        description: start time of the day
+                      end:
+                        type: string
+                        example: "1700"
+                        required: true
+                        description: end time of the day
+                  tuesday:
+                    type: object
+                    properties:
+                      start:
+                        type: string
+                        example: "0900"
+                        required: true
+                        description: start time of the day
+                      end:
+                        type: string
+                        example: "1700"
+                        required: true
+                        description: end time of the day
+                  wednesday:
+                    type: object
+                    properties:
+                      start:
+                        type: string
+                        example: "0900"
+                        required: true
+                        description: start time of the day
+                      end:
+                        type: string
+                        example: "1700"
+                        required: true
+                        description: end time of the day
+                  thursday:
+                    type: object
+                    properties:
+                      start:
+                        type: string
+                        example: "0900"
+                        required: true
+                        description: start time of the day
+                      end:
+                        type: string
+                        example: "1700"
+                        required: true
+                        description: end time of the day
+                  friday:
+                    type: object
+                    properties:
+                      start:
+                        type: string
+                        example: "0900"
+                        required: true
+                        description: start time of the day
+                      end:
+                        type: string
+                        example: "1700"
+                        required: true
+                        description: end time of the day
+                  saturday:
+                    type: object
+                    properties:
+                      start:
+                        type: string
+                        example: "0900"
+                        required: true
+                        description: start time of the day
+                      end:
+                        type: string
+                        example: "1700"
+                        required: true
+                        description: end time of the day
+                  sunday:
+                    type: object
+                    properties:
+                      start:
+                        type: string
+                        example: "0900"
+                        required: true
+                        description: start time of the day
+                      end:
+                        type: string
+                        example: "1700"
+                        required: true
+                        description: end time of the day
+    responses:
+      200:
+        description: The vendor's profile was updated
+      400:
+        description: The request was malformed
+
+/vendors/forgot-password:
+  put:
+    tags: [Vendors]
+    description: Forgot password
+    requestBody:
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              emailorMobile:
+                type: string
+                example: foo@bar.com or +2347023456789
+                required: true
+                description: email or mobile of the vendor
+    responses:
+      200:
+        description: password token sent to the vendors's email or mobile
+      400:
+        description: The request was malformed
+
+/vendors/reset-password:
+  post:
+    tags: [Vendors]
+    description: Reset password
+    requestBody:
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              token:
+                type: string
+                example: "1234"
+                required: true
+                description: token sent to the vendors's email
+              password:
+                type: string
+                example: Foobar!1
+                required: true
+                description: password of the vendors
+    responses:
+      200:
+        description: Password was reset
+      400:
+        description: The request was malformed
+
+/vendors/{vendorId}:
+  get:
+    tags: [Vendors]
+    description: Get vendor profile
+    security:
+      - bearerAuth: []
+    parameters:
+      - in: path
+        name: vendorId
+        schema:
+          type: string
+          example: 626578cb098bffa9d5c525ef
+          required: true
+          description: Id of the vendor
+    responses:
+      200:
+        description: The vendor's profile was retrieved
+      400:
+        description: The request was malformed
+  put:
+    tags: [Vendors]
+    description: Update vendor profile
+    security:
+      - bearerAuth: []
+    parameters:
+      - in: path
+        name: vendorId
+        schema:
+          type: string
+          example: 626578cb098bffa9d5c525ef
+          required: true
+          description: Id of the vendor
+    requestBody:
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              firstname:
+                type: string
+                example: foo
+                description: firstname of the vendor
+              lastname:
+                type: string
+                example: bar
+                description: lastname of the vendor
+              role:
+                type: string
+                required: true
+                example: owner
+                validations:
+                  - in: [owner, co-owner, admin, manager]
+                description: role of the user
+              vendorMobileNumbers:
+                type: array
+                items:
+                  type: string
+                  example: "07023456789"
+                  description: mobile of the vendor
+              vendorName:
+                type: string
+                example: Foo Bar
+                required: true
+                description: name of the vendor
+              address:
+                type: string
+                example: 5 driveway lekki
+                description: address of the vendor
+              geoLocation:
+                type: object
+                properties:
+                  type:
+                    type: string
+                    example: Point
+                    description: type of the geoLocation
+                  coordinates:
+                    type: array
+                    items:
+                      type: number
+                      example: 114.5110151, -8.45973
+                      description: coordinates of the user(Latitude first, longitude next)
+              socialMedia:
+                type: object
+                properties:
+                  facebook:
+                    type: string
+                    example: "https://www.facebook.com/foo"
+                    description: facebook of the vendor
+                  instagram:
+                    type: string
+                    example: "https://www.instagram.com/foo"
+                    description: instagram of the vendor
+                  twitter:
+                    type: string
+                    example: "https://www.twitter.com/foo"
+                    description: twitter of the vendor
+                  website:
+                    type: string
+                    example: "https://www.website.com/foo"
+                    description: website of the vendor
+              notifications:
+                type: boolean
+                example: true
+                description: Whether the vendor wants to receive notifications or not
+              minimumOrder:
+                type: number
+                example: 100
+                description: minimum order amount
+              isOpen:
+                type: boolean
+                example: true
+                description: Whether the vendor is open or not
+              schedule_period:
+                type: object
+                properties:
+                  schedule:
+                    type: boolean
+                    example: true
+                    description: schedule of the vendor
+                  notice_period:
+                    type: number
+                    example: 1
+                    description: notice period of the vendor
+    responses:
+      200:
+        description: The vendor's profile was updated
+      400:
+        description: The request was malformed
+
+/vendors/menu/add:
+  post:
+    tags: [Vendors]
+    description: Add menu to the vendor
+    security:
+      - bearerAuth: []
+    requestBody:
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              category:
+                type: string
+                example: Food
+                required: true
+                description: category of the menu
+              name:
+                type: string
+                example: Foo Bar
+                required: true
+                description: name of the menu
+              description:
+                type: string
+                example: Foo Bar
+                description: description of the menu
+              amount:
+                type: number
+                example: 100
+                required: true
+                description: amount of the menu
+              preparation_time:
+                type: string
+                example: "30"
+                description: preparation time of the menu
+              image:
+                type: string
+                format: binary
+                description: image of the menu
+              addons:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    section_title:
+                      type: string
+                      example: Foo Bar
+                      required: true
+                      description: section title of the addons
+                    addon:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          name:
+                            type: string
+                            example: Foo Bar
+                            required: true
+                            description: name of the addon
+                          price:
+                            type: number
+                            required: true
+                            example: 100
+                            description: price of the addon
+                    selectable:
+                      type: number
+                      example: 1
+                      required: true
+                      description: number of selectable addons
+    responses:
+      201:
+        description: The menu was added
+      400:
+        description: The request was malformed
+
+/vendors/menu/all:
+  get:
+    tags: [Vendors]
+    description: Get all menus of the vendor
+    security:
+      - bearerAuth: []
+    responses:
+      200:
+        description: The menus were retrieved
+      400:
+        description: The request was malformed
+
+/vendors/menu/{menuId}:
+  get:
+    tags: [Vendors]
+    description: Get menu of the vendor
+    security:
+      - bearerAuth: []
+    parameters:
+      - in: path
+        name: menuId
+        schema:
+          type: string
+          example: 626578cb098bffa9d5c525ef
+          required: true
+          description: Id of the menu
+    responses:
+      200:
+        description: The menu was retrieved
+      400:
+        description: The request was malformed
+  put:
+    tags: [Vendors]
+    description: Update menu of the vendor
+    security:
+      - bearerAuth: []
+    parameters:
+      - in: path
+        name: menuId
+        schema:
+          type: string
+          example: 626578cb098bffa9d5c525ef
+          required: true
+          description: Id of the menu
+    requestBody:
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              categoryId:
+                type: string
+                example: 6275b1ecf59955fec71e98f7
+              amount:
+                type: number
+                example: 100
+              preparation_time:
+                type: string
+                example: "30"
+              image:
+                type: string
+                format: binary
+              addons:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    section_title:
+                      type: string
+                      example: Foo Bar
+                      description: section title of the addons
+                    addon:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          name:
+                            type: string
+                            example: Foo Bar
+                            description: name of the addon
+                          price:
+                            type: number
+                            example: 100
+                            description: price of the addon
+                    selectable:
+                      type: number
+                      example: 1
+                      required: true
+                      description: number of selectable addons
+              discountEndDate:
+                type: date
+                example: "2022-05-07T03:56:54.315Z"
+                description: discount end date of the menu
+              discountStartingPrice:
+                type: number
+                example: 100
+                description: discount starting price of the menu
+              percentageDiscount:
+                type: number
+                example: 10
+                description: percentage discount of the menu
+              outOfStock:
+                type: boolean
+                example: true
+                description: out of stock of the menu
+              name:
+                type: string
+                example: Foo Bar
+                description: name of the menu
+              description:
+                type: string
+                example: Foo Bar
+                description: description of the menu
+    responses:
+      200:
+        description: The menu was updated
+      400:
+        description: The request was malformed
+
+  delete:
+    tags: [Vendors]
+    description: Delete menu of the vendor
+    security:
+      - bearerAuth: []
+    parameters:
+      - in: path
+        name: menuId
+        schema:
+          type: string
+          example: 626578cb098bffa9d5c525ef
+          required: true
+          description: Id of the menu
+    responses:
+      200:
+        description: The menu was deleted
+      400:
+        description: The request was malformed
+
+/vendors/update/opening-hours:
+  put:
+    tags: [Vendors]
+    description: Update opening hours of the vendor
+    security:
+      - bearerAuth: []
+    requestBody:
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              monday:
+                type: object
+                properties:
+                  start:
+                    type: string
+                    example: "0900"
+                    required: true
+                    description: start time of the day
+                  end:
+                    type: string
+                    example: "1700"
+                    required: true
+                    description: end time of the day
+              tuesday:
+                type: object
+                properties:
+                  start:
+                    type: string
+                    example: "0900"
+                    required: true
+                    description: start time of the day
+                  end:
+                    type: string
+                    example: "1700"
+                    required: true
+                    description: end time of the day
+              wednesday:
+                type: object
+                properties:
+                  start:
+                    type: string
+                    example: "0900"
+                    required: true
+                    description: start time of the day
+                  end:
+                    type: string
+                    example: "1700"
+                    required: true
+                    description: end time of the day
+              thursday:
+                type: object
+                properties:
+                  start:
+                    type: string
+                    example: "0900"
+                    required: true
+                    description: start time of the day
+                  end:
+                    type: string
+                    example: "1700"
+                    required: true
+                    description: end time of the day
+              friday:
+                type: object
+                properties:
+                  start:
+                    type: string
+                    example: "0900"
+                    required: true
+                    description: start time of the day
+                  end:
+                    type: string
+                    example: "1700"
+                    required: true
+                    description: end time of the day
+              saturday:
+                type: object
+                properties:
+                  start:
+                    type: string
+                    example: "0900"
+                    required: true
+                    description: start time of the day
+                  end:
+                    type: string
+                    example: "1700"
+                    required: true
+                    description: end time of the day
+              sunday:
+                type: object
+                properties:
+                  start:
+                    type: string
+                    example: "0900"
+                    required: true
+                    description: start time of the day
+                  end:
+                    type: string
+                    example: "1700"
+                    required: true
+                    description: end time of the day
+    responses:
+      200:
+        description: The opening hours were updated
+      400:
+        description: The request was malformed
+
+/vendors/combo/add:
+  post:
+    tags: [Vendors]
+    description: Add combo to the vendor
+    security:
+      - bearerAuth: []
+    requestBody:
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              name:
+                type: string
+                example: Foo Bar
+                required: true
+              price:
+                type: number
+                example: 100
+                required: true
+              combo:
+                type: array
+                items:
+                  type: string
+                  example: 4 big burgers
+                  description: combo of the vendor
+    responses:
+      201:
+        description: The combo was added
+      400:
+        description: The request was malformed
+
+/vendors/combo/all:
+  get:
+    tags: [Vendors]
+    description: Get all combos of the vendor
+    security:
+      - bearerAuth: []
+    responses:
+      200:
+        description: The combos were retrieved
+      400:
+        description: The request was malformed
+
+/vendors/combo/{comboId}:
+  delete:
+    tags: [Vendors]
+    description: Delete combo of the vendor
+    security:
+      - bearerAuth: []
+    parameters:
+      - in: path
+        name: comboId
+        schema:
+          type: string
+          example: 626578cb098bffa9d5c525ef
+          required: true
+          description: Id of the combo
+    responses:
+      200:
+        description: The combo was deleted
+      400:
+        description: The request was malformed
+
+/vendors/change/password:
+  put:
+    tags: [Vendors]
+    description: Change password of the vendor
+    security:
+      - bearerAuth: []
+    requestBody:
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              oldPassword:
+                type: string
+                example: "123456"
+                required: true
+              newPassword:
+                type: string
+                example: "1234567"
+                required: true
+    responses:
+      200:
+        description: The password was changed
+      400:
+        description: The request was malformed
+
+/vendors/change/email:
+  put:
+    tags: [Vendors]
+    description: Change email of the vendor
+    security:
+      - bearerAuth: []
+    requestBody:
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              newEmail:
+                type: string
+                example: foo@bar.com
+                required: true
+              password:
+                type: string
+                example: "123456"
+                required: true
+    responses:
+      200:
+        description: The email was changed
+      400:
+        description: The request was malformed
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+tags:
+  name: Vendors
+  description: The Vendor's API

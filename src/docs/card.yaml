@@ -1,0 +1,104 @@
+/cards:
+  post:
+    tags: [Card]
+    description: create new card details
+    security:
+      - bearerAuth: []
+    requestBody:
+      content:
+        application/json:
+          schema:
+            type: object
+            required: [cardNumber, cardExpiryDate, CVV]
+            properties:
+              cardNumber:
+                type: string
+                example: "4111111111111111"
+                description: card number
+              cardExpiryDate:
+                type: string
+                example: 12/20
+                description: card expiry date
+              CVV:
+                type: string
+                example: "123"
+                description: CVV
+    responses:
+      200:
+        description: successful operation
+      401:
+        description: The request was malformed
+  get:
+    tags: [Card]
+    description: get card details
+    security:
+      - bearerAuth: []
+    responses:
+      200:
+        description: successful operation
+      401:
+        description: The request was malformed
+
+/cards/{cardId}:
+  get:
+    tags: [Card]
+    description: get card details
+    security:
+      - bearerAuth: []
+    parameters:
+      - name: cardId
+        in: path
+        description: card id
+        required: true
+        schema:
+          type: string
+    responses:
+      200:
+        description: successful operation
+      401:
+        description: The request was malformed
+  put:
+    tags: [Card]
+    description: update card to primary card
+    security:
+      - bearerAuth: []
+    parameters:
+      - name: cardId
+        in: path
+        description: card id
+        required: true
+        schema:
+          type: string
+    responses:
+      200:
+        description: successful operation
+      401:
+        description: The request was malformed
+  delete:
+    tags: [Card]
+    description: delete card details
+    security:
+      - bearerAuth: []
+    parameters:
+      - name: cardId
+        in: path
+        description: card id
+        required: true
+        schema:
+          type: string
+    responses:
+      200:
+        description: successful operation
+      401:
+        description: The request was malformed
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+tags:
+  name: Card
+  description: The Card's API

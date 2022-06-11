@@ -1,0 +1,136 @@
+/carts:
+  post:
+    tags: [Carts]
+    description: add items to cart
+    security:
+      - bearerAuth: []
+    requestBody:
+      content:
+        application/json:
+          schema:
+            type: object
+            required: [mealId, price, quantity]
+            properties:
+              quantity:
+                type: number
+                example: 1
+                description: quantity of the meal
+              price:
+                type: number
+                example: foo@bar.com
+                description: email of the user
+              addons:
+                type: array
+                items:
+                  type: string
+                  example: addon1
+              allergyNote:
+                type: string
+                example: I have a problem with my food
+                description: allergy note of the user
+              cutlery:
+                type: boolean
+                example: false
+                description: whether the user wants to receive cutlery or not
+              mealId:
+                type: string
+                example: 6576578997yghvt6r6tyghf
+                description: meal id
+    responses:
+      200:
+        description: successful operation
+      401:
+        description: The request was malformed
+  get:
+    tags: [Carts]
+    description: get cart
+    security:
+      - bearerAuth: []
+    responses:
+      200:
+        description: successful operation
+      401:
+        description: The request was malformed
+  put:
+    tags: [Carts]
+    description: update cart
+    security:
+      - bearerAuth: []
+    requestBody:
+      content:
+        application/json:
+          schema:
+            type: object
+            required: [mealId, price, quantity]
+            properties:
+              cutlery:
+                type: boolean
+                example: false
+                description: whether the user wants to receive cutlery or not
+              note:
+                type: string
+                example: I have a problem with my food
+                description: allergy note of the user
+    responses:
+      200:
+        description: successful operation
+      401:
+        description: The request was malformed
+
+/carts/change-quantity/{itemId}/{status}:
+  put:
+    tags: [Carts]
+    description: increase or decrease quantity of cart item
+    security:
+      - bearerAuth: []
+    parameters:
+      - in: path
+        name: itemId
+        schema:
+          type: string
+          example: 626578cb098bffa9d5c525ef
+          required: true
+          description: item id
+      - in: path
+        name: status
+        schema:
+          type: string
+          example: increase
+          required: true
+          description: increase or decrease quantity of item
+    responses:
+      200:
+        description: successful operation
+      401:
+        description: The request was malformed
+
+/carts/{itemId}:
+  delete:
+    tags: [Carts]
+    description: delete cart item
+    security:
+      - bearerAuth: []
+    parameters:
+      - in: path
+        name: itemId
+        schema:
+          type: string
+          example: 626578cb098bffa9d5c525ef
+          required: true
+          description: item id
+    responses:
+      200:
+        description: successful operation
+      401:
+        description: The request was malformed
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+tags:
+  name: Carts
+  description: The Cart's API

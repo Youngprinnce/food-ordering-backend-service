@@ -1,0 +1,129 @@
+# /categories/vendors/create:
+#   post:
+#     tags: [Vendor-Categories]
+#     description: Create a new food category
+#     requestBody:
+#       content:
+#         application/json:
+#           schema:
+#             type: object
+#             required: [category]
+#             properties:
+#               category:
+#                 type: string
+#                 example: foo
+#                 description: the name of the category
+#     responses:
+#       201:
+#         description: The category was created
+#       401:
+#         description: The request was malformed
+
+# /categories/vendors/createMany:
+#   post:
+#     tags: [Vendor-Categories]
+#     description: Create many food category
+#     requestBody:
+#       content:
+#         application/json:
+#           schema:
+#             type: object
+#             required: [categories]
+#             properties:
+#               categories:
+#                 type: array
+#                 items:
+#                   type: object
+#                   properties:
+#                     name:
+#                       type: string
+#                       example: Pizza
+#                       required: true
+#                       description: Name of the category
+#     responses:
+#       200:
+#         description: The category was created
+#       401:
+#         description: The request was malformed
+
+/categories/vendors/all:
+  get:
+    tags: [Vendor-Categories]
+    description: Get all food categories
+    responses:
+      200:
+        description: All vendor categories fetched successfully
+      401:
+        description: The request was malformed
+
+# /categories/{id}:
+#   get:
+#     tags: [Categories]
+#     description: Get a single food category
+#     parameters:
+#       - in: path
+#         name: id
+#         schema:
+#           type: string
+#           example: 5f6f8f8f-8f8f-8f8f-8f8f-8f8f8f8f8f8f
+#         required: true
+#         description: the id of the category
+#     responses:
+#       200:
+#         description: The fetched category
+#       401:
+#         description: The request was malformed
+#   put:
+#     tags: [Categories]
+#     description: Update a food category
+#     parameters:
+#       - in: path
+#         name: id
+#         schema:
+#           type: string
+#           example: 5f6f8f8f-8f8f-8f8f-8f8f-8f8f8f8f8f8f
+#         required: true
+#         description: the id of the category
+#     requestBody:
+#       content:
+#         application/json:
+#           schema:
+#             type: object
+#             required: [category]
+#             properties:
+#               category:
+#                 type: string
+#                 example: foo
+#                 description: the name of the category
+#     responses:
+#       202:
+#         description: The category was updated
+#       401:
+#         description: The request was malformed
+#   delete:
+#     tags: [Categories]
+#     description: Delete a food category
+#     parameters:
+#       - in: path
+#         name: id
+#         schema:
+#           type: string
+#           example: 5f6f8f8f-8f8f-8f8f-8f8f-8f8f8f8f8f8f
+#         required: true
+#         description: the id of the category
+#     responses:
+#       200:
+#         description: The category was deleted
+#       401:
+#         description: The request was malformed
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+tags:
+  name: Vendor-Categories
+  description: The Vendor Categories API

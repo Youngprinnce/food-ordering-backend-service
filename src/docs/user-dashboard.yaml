@@ -1,0 +1,115 @@
+/user-dashboard/restaurant/featured:
+  get:
+    tags: [User-Dashboard]
+    description: Get featured restaurants
+    security:
+      - bearerAuth: []
+    responses:
+      200:
+        description: Featured restaurants fetched successfully
+      400:
+        description: The request was malformed
+
+/user-dashboard/restaurant/popular:
+  get:
+    tags: [User-Dashboard]
+    description: Get popular restaurants
+    security:
+      - bearerAuth: []
+    responses:
+      200:
+        description: Popular restaurants fetched successfully
+      400:
+        description: The request was malformed
+
+/user-dashboard/restaurant/close-by:
+  get:
+    tags: [User-Dashboard]
+    description: Get restaurants near the user
+    security:
+      - bearerAuth: []
+    responses:
+      200:
+        description: Restaurants near the user fetched successfully
+      400:
+        description: The request was malformed
+
+/user-dashboard/restaurant/all:
+  get:
+    tags: [User-Dashboard]
+    description: Get all restaurants
+    security:
+      - bearerAuth: []
+    responses:
+      200:
+        description: All restaurants fetched successfully
+      400:
+        description: The request was malformed
+
+/user-dashboard/searches/popular:
+  get:
+    tags: [User-Dashboard]
+    description: Get all restaurants
+    security:
+      - bearerAuth: []
+    responses:
+      200:
+        description: All restaurants fetched successfully
+      400:
+        description: The request was malformed
+
+/user-dashboard/search/{searchItem}:
+  get:
+    tags: [User-Dashboard]
+    description: Get all restaurants
+    security:
+      - bearerAuth: []
+    parameters:
+      - in: path
+        name: searchItem
+        schema:
+          type: string
+          example: pizza
+          required: true
+          description: The search item
+    responses:
+      200:
+        description: Restaurants fetched successfully
+      400:
+        description: The request was malformed
+
+/user-dashboard/search/category:
+  post:
+    tags: [User-Dashboard]
+    description: Get all restaurants
+    security:
+      - bearerAuth: []
+    requestBody:
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              categories:
+                type: array
+                items:
+                  type: string
+                  example: 626578cb098bffa9d5c525ef
+                  required: true
+                  description: The search item
+    responses:
+      200:
+        description: Restaurants fetched successfully
+      400:
+        description: The request was malformed
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+tags:
+  name: User-Dashboard
+  description: The User dashboard API

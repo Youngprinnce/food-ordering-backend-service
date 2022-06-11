@@ -1,0 +1,132 @@
+/address:
+  post:
+    tags: [Address]
+    description: create new address details
+    security:
+      - bearerAuth: []
+    requestBody:
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              addressNickname:
+                type: string
+                example: home
+                description: address nickname
+              apartmentNumber:
+                type: number
+                example: 1
+                description: apartment number
+              street:
+                type: string
+                example: 123 Main St
+                description: street
+              localGov:
+                type: string
+                example: Lagos
+                description: local gov
+              building:
+                type: string
+                example: Building 1
+                description: building
+              floor:
+                type: number
+                example: 1
+                description: floor
+              extraInfo:
+                type: string
+                example: Near the corner
+                description: extra info
+              geoLocation:
+                type: object
+                properties:
+                  type:
+                    type: string
+                    example: Point
+                    description: type of the geoLocation
+                  coordinates:
+                    type: array
+                    items:
+                      type: number
+                      example: 114.5110151, -8.45973
+                      description: coordinates of the user(Latitude first, longitude next)
+    responses:
+      200:
+        description: successful operation
+      401:
+        description: The request was malformed
+  get:
+    tags: [Address]
+    description: get address details
+    security:
+      - bearerAuth: []
+    responses:
+      200:
+        description: successful operation
+      401:
+        description: The request was malformed
+
+/address/{id}:
+  get:
+    tags: [Address]
+    description: get address details
+    security:
+      - bearerAuth: []
+    parameters:
+      - name: id
+        in: path
+        description: address id
+        required: true
+        schema:
+          type: string
+    responses:
+      200:
+        description: successful operation
+      401:
+        description: The request was malformed
+  put:
+    tags: [Address]
+    description: update address to primary
+    security:
+      - bearerAuth: []
+    parameters:
+      - name: id
+        in: path
+        description: address id
+        required: true
+        schema:
+          type: string
+    responses:
+      200:
+        description: successful operation
+      401:
+        description: The request was malformed
+  delete:
+    tags: [Address]
+    description: delete address details
+    security:
+      - bearerAuth: []
+    parameters:
+      - name: id
+        in: path
+        description: address id
+        required: true
+        schema:
+          type: string
+    responses:
+      200:
+        description: successful operation
+      401:
+        description: The request was malformed
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+tags:
+  name: Address
+  description: The Address's API
