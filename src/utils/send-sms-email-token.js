@@ -71,7 +71,7 @@ const sendMail = async (email, subject, message) => {
       html: message,
     };
     await sendGridMail.send(data);
-    logger.info(`SMS sent successfully to ${email}`);
+    logger.info(`Email sent successfully to ${email}`);
   } catch (err) {
     logger.log({
       level: 'error',

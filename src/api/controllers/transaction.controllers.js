@@ -7,6 +7,9 @@ const getAllUserTransactions = async (req, res) => {
   try {
     const { userId } = req.auth;
     const transactions = await Transaction().getAllUserTransactions(userId);
+    if (!transactions) {
+      return sendSuccess(res, { transactions: [] });
+    }
     return sendSuccess(res, { transactions });
   } catch (err) {
     return sendError(res, err);

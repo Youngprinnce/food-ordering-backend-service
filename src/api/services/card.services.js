@@ -32,6 +32,9 @@ module.exports = {
       async getCards(userId) {
         try {
           const cards = await Card.findOne({ userId });
+          if (!cards) {
+            return [];
+          }
           return cards.cardDetails;
         } catch (error) {
           logger.error(error);

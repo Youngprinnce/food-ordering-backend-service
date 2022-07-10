@@ -17,7 +17,7 @@ module.exports = {
           paymentDate: 1,
           status: 1,
           _id: 1,
-        }).populate('vendorId', 'vendorName');
+        }).populate('vendorId', 'vendorName vendorLogo vendorBannerImage');
       },
 
       async getOrderById(orderId) {
