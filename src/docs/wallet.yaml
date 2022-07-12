@@ -1,5 +1,5 @@
 /wallets/fund:
-  post:
+  put:
     tags: [Wallets]
     description: fund wallet
     security:

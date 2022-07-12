@@ -12,7 +12,11 @@ module.exports = {
       },
 
       async getAllUserTransactions(userId) {
-        return await Transaction.find({ userId }).orFail(() => throwError('User Transaction Not Found', 404));
+        const transaction = await Transaction.find({ userId });
+        if (!transaction) {
+          return [];
+        }
+        return transaction;
       },
 
       async getTransactionByReference(reference) {

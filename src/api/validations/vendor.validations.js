@@ -107,7 +107,7 @@ const addMenu = Joi.object().keys({
       price: Joi.number().required().default(0),
     })),
     selectable: Joi.number().required(),
-  })).required(),
+  })),
 });
 
 const updateMenu = Joi.object().keys({

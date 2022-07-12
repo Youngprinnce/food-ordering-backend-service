@@ -15,32 +15,34 @@ module.exports = {
     return {
       async featuredRestaurants(userId) {
         try {
-          // const user = await User.findById(userId);
+          const user = await User.findById(userId);
           const results = await Vendor.find({}).populate('vendorCategory');
 
+          const data = [];
           // map the results
-          const mappedResults = results.map((result) => {
-            // const { status, minutesAway } = vendorDetails(user, result);
+          const mappedResults = results.map(async (result) => {
+            const { status, minutesAway } = await vendorDetails(user, result);
 
             const {
               vendorType, vendorCategory, vendorName, vendorBannerImage,
             } = result;
-            console.log(vendorCategory);
-            return {
+            const object = {
               vendorName,
               vendorId: result._id,
               vendorBannerImage,
               vendorType,
               vendorCategory: vendorCategory[0].name,
-              minutesAway: 5,
+              minutesAway: typeof minutesAway === 'object' ? 12 : minutesAway,
               avgRating: 4.1,
               totalReviews: 100000,
               delivery: 400,
-              status: 'open',
+              status,
             };
+            data.push(object);
           });
+          await Promise.all(mappedResults);
           // randomly select 4 out of mapped results
-          const selectedResults = mappedResults.sort(() => 0.5 - Math.random()).slice(0, 4);
+          const selectedResults = data.sort(() => 0.5 - Math.random()).slice(0, 4);
           return selectedResults;
         } catch (ex) {
           logger.log({
@@ -53,34 +55,37 @@ module.exports = {
 
       async popularRestaurants(userId) {
         try {
-          // const user = await User.findById(userId);
+          const user = await User.findById(userId);
           const results = await Vendor.find({}).populate('vendorCategory');
 
           /*
             TODO: When the orders section is ready, we can get the popular restaurants
           */
+          const data = [];
           // map the results
-          const mappedResults = results.map((result) => {
-            // const { status, minutesAway } = vendorDetails(user, result);
+          const mappedResults = results.map(async (result) => {
+            const { status, minutesAway } = await vendorDetails(user, result);
 
             const {
               vendorType, vendorCategory, vendorName, vendorBannerImage,
             } = result;
-            return {
+            const object = {
               vendorName,
               vendorId: result._id,
               vendorBannerImage,
               vendorType,
               vendorCategory: vendorCategory[0].name,
-              minutesAway: 5,
+              minutesAway: typeof minutesAway === 'object' ? 12 : minutesAway,
               avgRating: 4.1,
               totalReviews: 100000,
               delivery: 400,
-              status: 'open',
+              status,
             };
+            data.push(object);
           });
+          await Promise.all(mappedResults);
           // randomly select 4 out of mapped results
-          const selectedResults = mappedResults.sort(() => 0.5 - Math.random()).slice(0, 5);
+          const selectedResults = data.sort(() => 0.5 - Math.random()).slice(0, 4);
           return selectedResults;
         } catch (ex) {
           logger.log({
@@ -96,54 +101,34 @@ module.exports = {
           const user = await User.findById(userId);
           const results = await Vendor.find({}).populate('vendorCategory');
 
-          const mappedResults = results.map((result) => {
-            // const { status, minutesAway } = vendorDetails(user, result);
+          const data = [];
+          // map the results
+          const mappedResults = results.map(async (result) => {
+            const { status, minutesAway } = await vendorDetails(user, result);
 
-            const {
-              vendorType, vendorCategory, vendorName, vendorBannerImage,
-            } = result;
-            return {
-              vendorName,
-              vendorId: result._id,
-              vendorBannerImage,
-              vendorType,
-              vendorCategory: vendorCategory[0].name,
-              minutesAway: 5,
-              avgRating: 3.2,
-              totalReviews: 25500,
-              delivery: 350,
-              status: 'open',
-            };
+            if (minutesAway <= 15) {
+              const {
+                vendorType, vendorCategory, vendorName, vendorBannerImage,
+              } = result;
+              const object = {
+                vendorName,
+                vendorId: result._id,
+                vendorBannerImage,
+                vendorType,
+                vendorCategory: vendorCategory[0].name,
+                minutesAway: typeof minutesAway === 'object' ? 12 : minutesAway,
+                avgRating: 4.1,
+                totalReviews: 100000,
+                delivery: 400,
+                status,
+              };
+              data.push(object);
+            }
           });
+          await Promise.all(mappedResults);
           // randomly select 4 out of mapped results
-          const selectedResults = mappedResults.sort(() => 0.5 - Math.random()).slice(0, 5);
+          const selectedResults = data.sort(() => 0.5 - Math.random()).slice(0, 4);
           return selectedResults;
-
-          // const closeBy = [];
-          // results.forEach((result) => {
-          //   const { status, minutesAway } = vendorDetails(user, result);
-
-          //   if (minutesAway <= 15) {
-          //     const {
-          //       vendorType, vendorCategory, name, vendorBannerImage,
-          //     } = result;
-          //     const object = {
-          //       name,
-          //       vendorId: result._id,
-          //       vendorBannerImage,
-          //       vendorType,
-          //       vendorCategory: vendorCategory.name,
-          //       minutesAway: 5,
-          //       avgRating: 4.1,
-          //       totalReviews: 100000,
-          //       delivery: 400,
-          //       status: 'open',
-          //     };
-          //     closeBy.push(object);
-          //   }
-          // });
-          // const selectedResults = closeBy.sort(() => 0.5 - Math.random()).slice(0, 5);
-          // return selectedResults;
         } catch (ex) {
           logger.log({
             level: 'error',
@@ -155,30 +140,34 @@ module.exports = {
 
       async allRestaurants(userId) {
         try {
-          // const user = await User.findById(userId);
+          const user = await User.findById(userId);
           const results = await Vendor.find({}).populate('vendorCategory');
-          console.log(results);
-
-          const mappedResults = results.map((result) => {
-            // const { status, minutesAway } = vendorDetails(user, result);
+          const data = [];
+          // map the results
+          const mappedResults = results.map(async (result) => {
+            const { status, minutesAway } = await vendorDetails(user, result);
 
             const {
               vendorType, vendorCategory, vendorName, vendorBannerImage,
             } = result;
-            return {
+            const object = {
               vendorName,
               vendorId: result._id,
               vendorBannerImage,
               vendorType,
               vendorCategory: vendorCategory[0].name,
-              minutesAway: 5,
+              minutesAway: typeof minutesAway === 'object' ? 12 : minutesAway,
               avgRating: 4.1,
               totalReviews: 100000,
               delivery: 400,
-              status: 'open',
+              status,
             };
+            data.push(object);
           });
-          return mappedResults;
+          await Promise.all(mappedResults);
+          // randomly select 4 out of mapped results
+          const selectedResults = data.sort(() => 0.5 - Math.random()).slice(0, 4);
+          return selectedResults;
         } catch (ex) {
           logger.log({
             level: 'error',
@@ -203,8 +192,9 @@ module.exports = {
         }
       },
 
-      async search(item) {
+      async search(item, userId) {
         try {
+          const user = await User.findById(userId);
           const searchItem = item.toLowerCase();
           const searchExists = await Search.findOne({
             search: searchItem,
@@ -221,26 +211,32 @@ module.exports = {
             name: { $regex: searchItem, $options: '$i' },
           }).populate('vendorCategory');
 
-          const mappedResults = results.map((result) => {
-            // const { status, minutesAway } = vendorDetails(user, result);
+          if (results.length !== 0) {
+            const data = [];
+            const mappedResults = results.map(async (result) => {
+              const { status, minutesAway } = await vendorDetails(user, result);
 
-            const {
-              vendorType, vendorCategory, name, vendorBannerImage,
-            } = result;
-            return {
-              name,
-              vendorId: result._id,
-              vendorBannerImage,
-              vendorType,
-              // vendorCategory: vendorCategory.name,
-              minutesAway: 5,
-              avgRating: 4.1,
-              totalReviews: 100000,
-              delivery: 400,
-              status: 'open',
-            };
-          });
-          return mappedResults;
+              const {
+                vendorType, vendorCategory, name, vendorBannerImage,
+              } = result;
+              const object = {
+                name,
+                vendorId: result._id,
+                vendorBannerImage,
+                vendorType,
+                vendorCategory: vendorCategory.name,
+                minutesAway,
+                avgRating: 4.1,
+                totalReviews: 100000,
+                delivery: 400,
+                status,
+              };
+              data.push(object);
+            });
+            await Promise.all(mappedResults);
+            return data;
+          }
+          return [];
         } catch (ex) {
           logger.log({
             level: 'error',
@@ -250,31 +246,37 @@ module.exports = {
         }
       },
 
-      async searchByCategory(categories) {
+      async searchByCategory(categories, userId) {
         try {
+          const user = await User.findById(userId);
           const results = await Vendor.find({
             vendorCategory: { $in: categories },
           }).populate('vendorCategory');
-          const mappedResults = results.map((result) => {
-            // const { status, minutesAway } = vendorDetails(user, result);
+
+          const data = [];
+          const mappedResults = results.map(async (result) => {
+            const { status, minutesAway } = await vendorDetails(user, result);
 
             const {
               vendorType, vendorCategory, name, vendorBannerImage,
             } = result;
-            return {
+            const object = {
               name,
               vendorId: result._id,
               vendorBannerImage,
               vendorType,
-              // vendorCategory: vendorCategory.name,
-              minutesAway: 5,
+              vendorCategory: vendorCategory.name,
+              minutesAway,
               avgRating: 4.1,
               totalReviews: 100000,
               delivery: 400,
-              status: 'open',
+              status,
             };
+            data.push(object);
           });
-          return mappedResults;
+          await Promise.all(mappedResults);
+
+          return data;
         } catch (ex) {
           logger.log({
             level: 'error',
@@ -288,7 +290,7 @@ module.exports = {
         try {
           const user = await User.findById(userId);
           const vendor = await Vendor.findById(vendorId);
-          const { status, minutesAway } = vendorDetails(user, vendor);
+          const { status, minutesAway } = await vendorDetails(user, vendor);
 
           const {
             vendorType,
@@ -383,9 +385,9 @@ module.exports = {
         }
       },
 
-      async restaurantMenuDetails(vendorId, menuId) {
+      async restaurantMenuDetails(userId, menuId) {
         try {
-          const menu = await Menu.findById(menuId);
+          const menu = await Menu.findById(menuId).populate('vendorId');
           const {
             _id,
             amount,
@@ -395,7 +397,14 @@ module.exports = {
             addons,
             percentageDiscount,
             discountEndDate,
+            vendorId,
           } = menu;
+
+          const user = await User.findById(userId);
+          const vendor = await Vendor.findById(vendorId);
+          const { status, minutesAway } = await vendorDetails(user, vendor);
+
+          const { start, end } = vendorId.opening_hours[currentDay()];
 
           let discountedAmount = 0;
           if (percentageDiscount && percentageDiscount > 0) {
@@ -412,10 +421,23 @@ module.exports = {
             description,
             image,
             menuId: _id,
-            vendorId,
+            vendorId: vendor._id,
             addons,
             preparation_time,
             discountedAmount,
+            vendorName: vendorId.name,
+            vendorBannerImage: vendorId.vendorBannerImage,
+            vendorType: vendorId.vendorType,
+            vendorCategory: 'African Cuisine',
+            minutesAway: 20,
+            avgRating: 4.1,
+            totalReviews: 100000,
+            delivery: 400,
+            status,
+            minimumOrder: vendorId.minimumOrder || 0,
+            openingTime: start,
+            closingTime: end,
+            avgDeliveryTime: 5,
           };
         } catch (ex) {
           logger.log({

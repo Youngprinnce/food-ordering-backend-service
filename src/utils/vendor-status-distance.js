@@ -2,7 +2,7 @@
 const currentDay = require('./current-day');
 const distanceInMinutes = require('./distance-in-minutes');
 
-const vendorDetails = (user, vendor) => {
+const vendorDetails = async (user, vendor) => {
   const [lat1, long1] = user.geoLocation.coordinates;
   const [lat2, long2] = vendor.geoLocation.coordinates;
 
@@ -16,10 +16,8 @@ const vendorDetails = (user, vendor) => {
   let check;
   day.start <= currentTime && day.end >= currentTime ? check = true : check = false;
 
-  const to = `${lat1}|${long1}`;
-  const from = `${lat2}|${long2}`;
-
-  const minutesAway = distanceInMinutes(from, to);
+  const to = `${lat1},${long1}`;
+  const from = `${lat2},${long2}`;
 
   let status;
   // compare status and isOpen but status take more priority
@@ -32,6 +30,8 @@ const vendorDetails = (user, vendor) => {
   } else if (!check && !isOpen) {
     status = 'closed';
   }
+
+  const minutesAway = await distanceInMinutes(from, to);
 
   return {
     status,

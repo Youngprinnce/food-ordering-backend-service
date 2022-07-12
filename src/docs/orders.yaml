@@ -27,7 +27,7 @@
                       description: quantity of the meal
                     mealId:
                       type: string
-                      example: 6576578997yghvt6r6tyghf
+                      example: 62ca85371321de2a27cb5d49
                       description: meal id
                     addons:
                       type: array
@@ -40,7 +40,7 @@
                       description: allergy note of the user
               vendorId:
                 type: string
-                example: 6576578997yghvt6r6tyghf
+                example: 62ca85371321de2a27cb5d49
                 description: vendor id
               cutlery:
                 type: boolean

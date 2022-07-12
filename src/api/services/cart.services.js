@@ -59,6 +59,8 @@ module.exports = {
             cartItems, cutlery, note, _id,
           } = cart;
 
+          const foodId = cartItems[0].mealId;
+          const menu = await Menu.findOne({ _id: foodId }).populate('vendorId');
           const results = [];
           const data = cartItems.map(async (item) => {
             const { mealId, price, quantity } = item;
@@ -83,6 +85,7 @@ module.exports = {
             cartTotal: results.reduce((acc, curr) => acc + curr.quantityMealPrice, 0) + 50,
             subTotal: results.reduce((acc, curr) => acc + curr.quantityMealPrice, 0),
             cartId: _id,
+            vendorName: menu.vendorId.vendorName || '',
           };
         } catch (ex) {
           logger.log({

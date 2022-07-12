@@ -34,7 +34,7 @@
                 description: whether the user wants to receive cutlery or not
               mealId:
                 type: string
-                example: 6576578997yghvt6r6tyghf
+                example: 626578cb098bffa9d5c525ef
                 description: meal id
     responses:
       200:

@@ -5,9 +5,9 @@ const addItemToCartSchema = Joi.object().keys({
   quantity: Joi.number().required().min(1),
   price: Joi.number().required(),
   addons: Joi.array().items(Joi.string().required()),
-  allergyNote: Joi.string(),
+  allergyNote: Joi.string().optional(),
   cutlery: Joi.boolean().default(false),
-  note: Joi.string(),
+  note: Joi.string().optional(),
 });
 
 const changeCartItemQuantity = Joi.object().keys({

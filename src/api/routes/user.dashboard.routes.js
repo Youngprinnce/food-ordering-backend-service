@@ -11,6 +11,6 @@ userDashboardRoute.get('/user-dashboard/search/:searchItem', authenticate, userD
 userDashboardRoute.post('/user-dashboard/search/category', authenticate, userDashboardController.searchByCategory);
 userDashboardRoute.get('/user-dashboard/restaurant/:id/details', authenticate, userDashboardController.restaurantDetails);
 userDashboardRoute.get('/user-dashboard/restaurant/:id/menus', authenticate, userDashboardController.restaurantMenus);
-userDashboardRoute.get('/user-dashboard/restaurant/:id/menus/:menuId', authenticate, userDashboardController.restaurantMenuDetails);
+userDashboardRoute.get('/user-dashboard/restaurant/menus/:menuId', authenticate, userDashboardController.restaurantMenuDetails);
 
 module.exports = userDashboardRoute;

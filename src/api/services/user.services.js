@@ -187,7 +187,7 @@ module.exports = {
           // use findOneAndUpdate. this makes our app more faster and more reliable
           const user = await User.findOneAndUpdate({ $or: [{ email: emailorMobile }, { mobile: emailorMobile }] }, { passwordResetToken: token }).orFail(() => 'User not found');
 
-          validator.isMobilePhone(emailorMobile, 'en-NG') ? await sendSms(emailorMobile, user.passwordResetToken) : await sendMail(user.email, 'Password Reset Token', `${user.passwordResetToken}`);
+          validator.isMobilePhone(emailorMobile, 'en-NG') ? await sendSms(emailorMobile, user.passwordResetToken) : await sendMail(user.email, 'Password Reset Token', token);
           return true;
         } catch (ex) {
           logger.log({

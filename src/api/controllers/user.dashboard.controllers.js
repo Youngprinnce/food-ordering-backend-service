@@ -74,7 +74,7 @@ const search = async (req, res) => {
   try {
     const { searchItem } = req.params;
     if (!searchItem || searchItem === '') throwError('Search cannot be empty', 422);
-    const response = await UserDashboard().search(searchItem);
+    const response = await UserDashboard().search(searchItem, req.auth.userId);
 
     if (response.error) throwError(response.error, 401);
 
@@ -89,7 +89,7 @@ const searchByCategory = async (req, res) => {
   try {
     const { categories } = req.body;
     if (!categories || categories.length === 0) throwError('Categories cannot be empty', 422);
-    const response = await UserDashboard().searchByCategory(categories);
+    const response = await UserDashboard().searchByCategory(categories, req.auth.userId);
 
     if (response.error) throwError(response.error, 401);
 
@@ -141,11 +141,10 @@ const restaurantMenus = async (req, res) => {
 // Get restaurant menus ===> /api/user-dashboard/restaurant/:id/menus/:menuId
 const restaurantMenuDetails = async (req, res) => {
   try {
-    const { id, menuId } = req.params;
+    const { menuId } = req.params;
+    const { userId } = req.auth;
 
-    await Vendor().getMenu(id, menuId);
-
-    const response = await UserDashboard().restaurantMenuDetails(id, menuId);
+    const response = await UserDashboard().restaurantMenuDetails(userId, menuId);
 
     if (response.error) throwError(response.error, 401);
 
