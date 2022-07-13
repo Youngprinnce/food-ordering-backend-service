@@ -55,38 +55,41 @@ module.exports = {
         try {
           const cart = await Cart.findOne({ userId });
 
-          const {
-            cartItems, cutlery, note, _id,
-          } = cart;
+          if (cart) {
+            const {
+              cartItems, cutlery, note, _id,
+            } = cart;
 
-          const foodId = cartItems[0].mealId;
-          const menu = await Menu.findOne({ _id: foodId }).populate('vendorId');
-          const results = [];
-          const data = cartItems.map(async (item) => {
-            const { mealId, price, quantity } = item;
-            const quantityMealPrice = price * quantity;
-            const meal = await Menu.findById(mealId);
-            results.push({
-              quantityMealPrice,
-              name: meal.name,
-              image: meal.image,
-              addons: item.addons,
-              quantity,
-              // eslint-disable-next-line no-underscore-dangle
-              itemId: item._id,
+            const foodId = cartItems[0].mealId;
+            const menu = await Menu.findOne({ _id: foodId }).populate('vendorId');
+            const results = [];
+            const data = cartItems.map(async (item) => {
+              const { mealId, price, quantity } = item;
+              const quantityMealPrice = price * quantity;
+              const meal = await Menu.findById(mealId);
+              results.push({
+                quantityMealPrice,
+                name: meal.name,
+                image: meal.image,
+                addons: item.addons,
+                quantity,
+                // eslint-disable-next-line no-underscore-dangle
+                itemId: item._id,
+              });
             });
-          });
-          await Promise.all(data);
-          return {
-            cartItems: results,
-            cutlery,
-            note,
-            serviceFee: 50,
-            cartTotal: results.reduce((acc, curr) => acc + curr.quantityMealPrice, 0) + 50,
-            subTotal: results.reduce((acc, curr) => acc + curr.quantityMealPrice, 0),
-            cartId: _id,
-            vendorName: menu.vendorId.vendorName || '',
-          };
+            await Promise.all(data);
+            return {
+              cartItems: results,
+              cutlery,
+              note,
+              serviceFee: 50,
+              cartTotal: results.reduce((acc, curr) => acc + curr.quantityMealPrice, 0) + 50,
+              subTotal: results.reduce((acc, curr) => acc + curr.quantityMealPrice, 0),
+              cartId: _id,
+              vendorName: menu.vendorId.vendorName || '',
+            };
+          }
+          return { cartItems: [] };
         } catch (ex) {
           logger.log({
             level: 'error',

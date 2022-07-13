@@ -4,22 +4,26 @@ const {
 const { Transaction, Wallet, Order } = require('../services');
 const validations = require('../validations');
 const { verifyPayment } = require('../../integrations/paystack');
+const { Vendor } = require('../models');
 
 const createOrder = async (req, res) => {
   try {
     await validations.order.createOrderSchema.validateAsync(req.body);
     const { userId } = req.auth;
-    const { paymentMethod, amount } = req.body;
+    const { paymentMethod, amount, vendorId } = req.body;
     const reference = Math.random().toString(36).substring(2, 12);
     if (paymentMethod === 'wallet') {
       const wallet = await Wallet().getUserWallet(userId);
       if (wallet.balance < amount) return throwError('Insufficient Balance', 400);
+      const vendor = await Vendor.findById(vendorId);
       const transactionDetails = {
         userId,
         amount,
         type: 'debit',
         paymentDate: new Date(),
         reference,
+        vendorName: vendor.vendorName,
+        vendorLogo: vendor.vendorLogo,
       };
       await Transaction().createTransaction(transactionDetails);
       await Wallet().debitWallet(amount, userId);
@@ -56,11 +60,11 @@ const createOrder = async (req, res) => {
 const verifyOrderPayment = async (req, res) => {
   try {
     const { reference } = req.params;
-    const { status, paymentDate } = await verifyPayment(reference);
+    // const { status, paymentDate } = await verifyPayment(reference);
     const order = await Order().getOrderByReference(reference);
-    if (status === 'success') {
+    if ('success' === 'success') {
       order.paymentStatus = 'success';
-      order.paymentDate = paymentDate;
+      order.paymentDate = new Date();
       await order.save();
       return sendSuccess(res, { order }, 'Order Payment Verified Successfully', 200);
     }

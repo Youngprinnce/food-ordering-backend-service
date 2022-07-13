@@ -35,6 +35,14 @@ const transactionSchema = new Schema({
     type: Date,
     default: Date.now,
   },
+  vendorName: {
+    type: String,
+    required: true,
+  },
+  vendorLogo: {
+    type: String,
+    required: true,
+  },
 });
 
 module.exports = mongoose.model('Transaction', transactionSchema);
