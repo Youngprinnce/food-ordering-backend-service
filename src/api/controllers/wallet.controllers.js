@@ -20,6 +20,8 @@ const fundWallet = async (req, res) => {
       reference,
       paymentDate: Date.now(),
       status: 'pending',
+      vendorName: 'JemiEats',
+      vendorLogo: 'https://res.cloudinary.com/youngprinnce/image/upload/v1657708273/jemiEats/files6xyg.jpg',
     };
     await Transaction().createTransaction(transactionDetails);
     return sendSuccess(res, { reference }, '', 200);

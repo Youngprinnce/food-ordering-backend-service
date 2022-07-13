@@ -62,6 +62,7 @@ const signupStepTwo = async (req, res) => {
     // await validations.vendor.stepTwoSignupSchema.validateAsync(req.body);
     // Get all the files from the request
     if (req.files) {
+      console.log('files', req.files);
       const vendorLogo = req.files.vendorLogo[0];
       const vendorBannerImage = req.files.vendorBannerImage[0];
       const identificationImage = req.files.identificationImage[0];
@@ -78,6 +79,8 @@ const signupStepTwo = async (req, res) => {
         ? req.body.vendorCertificateImage = await uploadFile(vendorCertificateImage.path) : null;
       vendorMenu ? req.body.vendorMenu = await uploadFile(vendorMenu.path) : null;
     }
+
+    console.log(req.body)
 
     const response = await Vendor().signupStepTwo(req.auth.vendorId, req.body);
 
