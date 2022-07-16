@@ -80,7 +80,7 @@ const signupStepTwo = async (req, res) => {
       vendorMenu ? req.body.vendorMenu = await uploadFile(vendorMenu.path) : null;
     }
 
-    console.log(req.body)
+    console.log(req.body);
 
     const response = await Vendor().signupStepTwo(req.auth.vendorId, req.body);
 
