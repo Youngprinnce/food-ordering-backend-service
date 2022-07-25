@@ -1,0 +1,253 @@
+/users/signup:
+  post:
+    tags: [Users]
+    description: Sign up a new user
+    requestBody:
+      content:
+        application/json:
+          schema:
+            type: object
+            required: [firstname, lastname, email, password, mobile]
+            properties:
+              firstname:
+                type: string
+                example: foo
+                required: true
+                description: firstname of the user
+              lastname:
+                type: string
+                example: bar
+                description: lastname of the user
+              email:
+                type: string
+                example: foo@bar.com
+                description: email of the user
+              password:
+                type: string
+                example: Foobar!1
+                description: password of the user
+              mobile:
+                type: string
+                example: "+2347023456789"
+                description: mobile of the user
+              offers:
+                type: boolean
+                example: false
+                description: whether the user wants to receive offers
+              referralId:
+                type: string
+                example: JE24687
+                description: referral id of the user who reffered the user
+    responses:
+      200:
+        description: The user's profile was updated
+      401:
+        description: The request was malformed
+
+/users/verify-account:
+  post:
+    tags: [Users]
+    description: Verify a user's account
+    requestBody:
+      content:
+        application/json:
+          schema:
+            type: object
+            required: [emailToken, mobileToken]
+            properties:
+              emailToken:
+                type: string
+                example: "1234"
+                description: code sent to the user's email
+              mobileToken:
+                type: string
+                example: "1234"
+                description: code sent to the user's mobile
+    responses:
+      200:
+        description: The user's profile was updated
+      400:
+        description: The request was malformed
+
+/users/resend-token:
+  get:
+    tags: [Users]
+    description: Resend user a new verification token
+    security:
+      - bearerAuth: []
+    responses:
+      200:
+        description: The user's profile was updated
+      400:
+        description: The request was malformed
+
+/users/login:
+  post:
+    tags: [Users]
+    description: Login a user
+    requestBody:
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              emailorMobile:
+                type: string
+                example: foo@bar.com or +2347023456789
+                required: true
+                description: email or mobile of the user
+              password:
+                type: string
+                example: Foobar!1
+                required: true
+                description: password of the user
+    responses:
+      200:
+        description: The user's profile was updated
+      400:
+        description: The request was malformed
+
+/users/update-profile:
+  put:
+    tags: [Users]
+    description: Update profile in user in registration
+    security:
+      - bearerAuth: []
+    requestBody:
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              address:
+                type: string
+                example: 5 driveway lekki
+                description: email or mobile of the user
+              favouriteMeals:
+                type: array
+                items:
+                  type: string
+                  example: 626578cb098bffa9d5c525ef
+                  description: Id of the meal category
+              geoLocation:
+                type: object
+                properties:
+                  coordinates:
+                    type: array
+                    items:
+                      type: number
+                      example: 114.5110151, -8.45973
+                      description: coordinates of the user
+    responses:
+      200:
+        description: The user's profile was updated
+      400:
+        description: The request was malformed
+
+/users/forgot-password:
+  put:
+    tags: [Users]
+    description: Forgot password
+    requestBody:
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              emailorMobile:
+                type: string
+                example: foo@bar.com or +2347023456789
+                required: true
+                description: email or mobile of the user
+    responses:
+      200:
+        description: The user's profile was updated
+      400:
+        description: The request was malformed
+
+/users/reset-password:
+  post:
+    tags: [Users]
+    description: Reset password
+    requestBody:
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              token:
+                type: string
+                example: "1234"
+                required: true
+                description: token sent to the user's email
+              password:
+                type: string
+                example: Foobar!1
+                required: true
+                description: password of the user
+    responses:
+      200:
+        description: Password was reset
+      400:
+        description: The request was malformed
+
+/users/google/url?action=login:
+  get:
+    tags: [Users]
+    description: Gets google login url. The url gotten from this is what going serve as the link to your login with google button.
+      it is clicking a button with the url gotten from here that will triger the login with google
+    requestBody: null
+    responses:
+      200:
+        description: The url goten from the server.
+        content:
+          application/json:
+            schema:
+              type: object
+              data: {url: http://lorem}
+              example: {url: "https://googleapis.google.com/login"}
+              description: the data object contianing the url
+      400:
+        description: The request was malformed
+        content:
+          application/json:
+            schema:
+              type: object
+              $ref: "#/components/schemas/ErrorResponse"
+              description: error
+
+/users/google/url:
+  get:
+    tags: [Users]
+    description: Gets google signup url. The url gotten from this is what going serve as the link to your signup with google button.
+      it is clicking a button with the url gotten from here that will triger the signup with google
+    requestBody: null
+    responses:
+      200:
+        description: The url goten from the server.
+        content:
+          application/json:
+            schema:
+              type: object
+              data: {url: http://lorem}
+              example: {url: "https://googleapis.google.com/login"}
+              description: the data object contianing the url
+      400:
+        description: The request was malformed
+        content:
+          application/json:
+            schema:
+              type: object
+              $ref: "#/components/schemas/ErrorResponse"
+              description: error
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+tags:
+  name: Users
+  description: The User's API

@@ -1,0 +1,11 @@
+{"level":"error","message":"Unauthorized"}
+{"level":"error","message":"Unauthorized"}
+{"level":"error","message":"Authentication Failed. Please login"}
+{"level":"error","message":"E11000 duplicate key error collection: jemiEats.users index: email_1 dup key: { email: \"foo@bar.com\" }"}
+{"level":"error","message":"Unauthorized"}
+{"level":"error","message":"Unauthorized"}
+{"level":"error","message":"Unauthorized"}
+{"level":"error","message":"Unauthorized"}
+{"level":"error","message":"Unauthorized"}
+{"level":"error","message":"Unauthorized"}
+{"level":"error","message":"newUser is not defined"}

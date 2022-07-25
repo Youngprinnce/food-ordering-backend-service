@@ -1,0 +1,121 @@
+{
+    "vendorCategories": [
+        { "name": "African (General)"
+        },
+        { "name": "Alcohol"
+        },
+        { "name": "Breakfast"
+        },
+        { "name": "Burgers"
+        },
+        { "name": "Cakes & Bakery"
+        },
+        { "name": "Carribean"
+        },
+        { "name": "Chinese"
+        },
+        { "name": "Coffee"
+        },
+        { "name": "Desserts"
+        },
+        { "name": "Fast food"
+        },
+        { "name": "Fine Dining"
+        },
+        { "name": "French"
+        },
+        { "name": "Grill"
+        },
+        { "name": "Grocery"
+        },
+        { "name": "Halal"
+        },
+        { "name": "Healthy"
+        },
+        { "name": "Ice cream"
+        },
+        { "name": "Indian"
+        },
+        { "name": "Italian"
+        },
+        { "name": "Mexican"
+        },
+        { "name": "Nigerian"
+        },
+        { "name": "Pasta"
+        },
+        { "name": "Salads"
+        },
+        { "name": "Sandwiches"
+        },
+        { "name": "Seafood"
+        },
+        { "name": "Shawarma"
+        },
+        { "name": "Smoothies"
+        },
+        { "name": "Steak"
+        },
+        { "name": "Sushi"
+        },
+        { "name": "Suya"
+        },
+        { "name": "Vegetarian"
+        },
+        { "name": "Wings"
+        }
+    ],
+
+    "favMeals": [
+        { "name": "Banga Soup" },
+        { "name": "Burgers" },
+        { "name": "Chicken" },
+        { "name": "Chinese" },
+        { "name": "Chips" },
+        { "name": "Amala" },
+        { "name": "Nwkobi" },
+        { "name": "Edikaikong" },
+        { "name": "Eba" },
+        { "name": "Egusi" },
+        { "name": "Pancakes" },
+        { "name": "Mac 'N Cheese" },
+        { "name": "Bitterleaf Soup" },
+        { "name": "English Breakfast" },
+        { "name": "Pasta" },
+        { "name": "Pepper Soup" },
+        { "name": "Ewedu" },
+        { "name": "Mexican" },
+        { "name": "Kebab" },
+        { "name": "Ogbono stew" },
+        { "name": "Afang" },
+        { "name": "Fried Fish" },
+        { "name": "Fried Rice" },
+        { "name": "Fufu" },
+        { "name": "Gbegiri" },
+        { "name": "Gizdodo" },
+        { "name": "Efo Riro" },
+        { "name": "Isi Ewu" },
+        { "name": "Lasagna" },
+        { "name": "Italian" },
+        { "name": "Pizza" },
+        { "name": "Joloff Rice" },
+        { "name": "Plantain" },
+        { "name": "Pork" },
+        { "name": "Poundo" },
+        { "name": "Puff Puff" },
+        { "name": "Rice" },
+        { "name": "Salad" },
+        { "name": "Salmon" },
+        { "name": "Sandwich" },
+        { "name": "Shawarma" },
+        { "name": "Shrimp" },
+        { "name": "Spaghetti" },
+        { "name": "Steak" },
+        { "name": "Suya" },
+        { "name": "Sweet Potato" },
+        { "name": "Tacos" },
+        { "name": "Waffles" },
+        { "name": "Wings" },
+        { "name": "Yam" }
+    ]
+}

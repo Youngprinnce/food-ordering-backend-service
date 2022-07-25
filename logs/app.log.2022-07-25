@@ -1,0 +1,39 @@
+{"level":"info","message":"Server listening on port 5000"}
+{"level":"info","message":"Connected to DB"}
+{"level":"info","message":"SMS sent successfully to +2347023456789"}
+{"level":"error","message":"Unauthorized"}
+{"level":"error","message":"Unauthorized"}
+{"level":"info","message":"Server listening on port 5000"}
+{"level":"info","message":"Connected to DB"}
+{"level":"error","message":"Authentication Failed. Please login"}
+{"level":"info","message":"Server listening on port 5000"}
+{"level":"info","message":"Connected to DB"}
+{"level":"info","message":"Server listening on port 5000"}
+{"level":"info","message":"Connected to DB"}
+{"level":"info","message":"Server listening on port 5000"}
+{"level":"info","message":"Connected to DB"}
+{"level":"info","message":"Server listening on port 5000"}
+{"level":"info","message":"Connected to DB"}
+{"level":"error","message":"E11000 duplicate key error collection: jemiEats.users index: email_1 dup key: { email: \"foo@bar.com\" }"}
+{"level":"info","message":"Server listening on port 5000"}
+{"level":"info","message":"Connected to DB"}
+{"level":"info","message":"Server listening on port 5000"}
+{"level":"info","message":"Connected to DB"}
+{"level":"error","message":"Unauthorized"}
+{"level":"error","message":"Unauthorized"}
+{"level":"info","message":"SMS sent successfully to 2348155204860"}
+{"level":"info","message":"Server listening on port 5000"}
+{"level":"info","message":"Connected to DB"}
+{"level":"error","message":"Unauthorized"}
+{"level":"error","message":"Unauthorized"}
+{"level":"info","message":"SMS sent successfully to 2349069083119"}
+{"level":"error","message":"Unauthorized"}
+{"level":"error","message":"Unauthorized"}
+{"level":"info","message":"SMS sent successfully to +2349069083119"}
+{"level":"info","message":"Server listening on port 5000"}
+{"level":"info","message":"Connected to DB"}
+{"level":"error","message":"newUser is not defined"}
+{"level":"info","message":"SMS sent successfully to 09069083119"}
+{"level":"info","message":"Server listening on port 5000"}
+{"level":"info","message":"Connected to DB"}
+{"level":"info","message":"SMS sent successfully to +23490211101990"}
